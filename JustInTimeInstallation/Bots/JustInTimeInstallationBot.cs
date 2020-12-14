@@ -63,22 +63,27 @@ namespace JustInTimeInstallation.Bots
                     },
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // else it will show installation card in Task module for the Bot so user can install the app
-                return new MessagingExtensionActionResponse
+                if (ex.Message.Contains("403")) 
                 {
-                    Task = new TaskModuleContinueResponse
+                    // else it will show installation card in Task module for the Bot so user can install the app
+                    return new MessagingExtensionActionResponse
                     {
-                        Value = new TaskModuleTaskInfo
+                        Task = new TaskModuleContinueResponse
                         {
-                            Card = GetJustInTimeInstallation(),
-                            Height = 200,
-                            Width = 400,
-                            Title = "Adaptive Card: Inputs",
+                            Value = new TaskModuleTaskInfo
+                            {
+                                Card = GetJustInTimeInstallationCard(),
+                                Height = 200,
+                                Width = 400,
+                                Title = "Adaptive Card: Inputs",
+                            },
                         },
-                    },
-                };
+                    };
+
+                }
+            
             }
         }
 
@@ -102,7 +107,7 @@ namespace JustInTimeInstallation.Bots
             return adaptiveCardAttachment;
         }
 
-        private static Attachment GetJustInTimeInstallation()
+        private static Attachment GetJustInTimeInstallationCard()
         {
 
             // combine path for cross platform support
