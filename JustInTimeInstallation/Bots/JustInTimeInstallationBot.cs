@@ -44,6 +44,8 @@ namespace JustInTimeInstallation.Bots
 
         protected override async Task<MessagingExtensionActionResponse> OnTeamsMessagingExtensionFetchTaskAsync(ITurnContext<IInvokeActivity> turnContext, MessagingExtensionAction action, CancellationToken cancellationToken)
         {
+            // we are handling two cases within try/catch block 
+            //if the bot is installed it will create adaptive card attachment and show card with input fields
             try
             {
                 await TeamsInfo.GetPagedMembersAsync(turnContext, 100, null, cancellationToken);
@@ -63,13 +65,14 @@ namespace JustInTimeInstallation.Bots
             }
             catch (Exception)
             {
+                // else it will show installation card in Task module for the Bot so user can install the app
                 return new MessagingExtensionActionResponse
                 {
                     Task = new TaskModuleContinueResponse
                     {
                         Value = new TaskModuleTaskInfo
                         {
-                            Card = GetInstallationPage(),
+                            Card = GetJustInTimeInstallation(),
                             Height = 200,
                             Width = 400,
                             Title = "Adaptive Card: Inputs",
@@ -99,9 +102,11 @@ namespace JustInTimeInstallation.Bots
             return adaptiveCardAttachment;
         }
 
-        private static Attachment GetInstallationPage()
+        private static Attachment GetJustInTimeInstallation()
         {
+
             // combine path for cross platform support
+            //Reading the card json and sending it as an attachment to Task module response
             string[] paths = { ".", "Resources", "justintimeinstallation.json" };
             var adaptiveCardJson = File.ReadAllText(Path.Combine(paths));
 
