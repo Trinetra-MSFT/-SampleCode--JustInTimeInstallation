@@ -4,7 +4,7 @@
 Bot Framework v4 Just In Time Installation Bot sample for Teams.
 
 This bot has been created using [Bot Framework](https://dev.botframework.com). This sample shows
-how to do a just in time installation of your app in a conversation.
+how to do a just in time installation of your app in a conversation. the sample code check if the Bot is installed in current context (by fetching the roaster) or not if Bot is installed in current context it sends an adaptive card inputs else it throws a Just in time installation dialog to the user so they can install the app. Please check [Request to Install your conversational Bots](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/messaging-extension-v3/create-extensions?tabs=typescript#request-to-install-your-conversational-bot) for more information about just in time installation
 
 ## Prerequisites
 
