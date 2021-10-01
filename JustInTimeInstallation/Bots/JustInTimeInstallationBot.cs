@@ -65,7 +65,7 @@ namespace JustInTimeInstallation.Bots
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("403"))
+                if (ex.Message.Contains("403") || ex.Message.ToLower().Contains("forbidden"))
                 {
                     // else it will show installation card in Task module for the Bot so user can install the app
                     return new MessagingExtensionActionResponse
